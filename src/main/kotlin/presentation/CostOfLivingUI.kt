@@ -17,15 +17,23 @@ class CostOfLivingUI(
     private fun presentFeatures() {
         showOptions()
         val input = getUserInput()
+        var shouldExit = false
         when (input) {
             1 -> launchTopSalaries()
             2 -> launchCheapestGregory()
             3 -> launchSearchSalariesInCountry()
+            4 -> {
+                shouldExit = true
+            }
+
             else -> {
                 println("Invalid Input")
             }
         }
-        presentFeatures()
+        if (shouldExit)
+            println("👋")
+        else
+            presentFeatures()
     }
 
     private fun showWelcome() {
@@ -37,6 +45,7 @@ class CostOfLivingUI(
         println("1- get names of cities with the highest salary")
         println("2- get names of cities with the cheapest grocery comparing to salaries")
         println("3- search for salaries, in any country")
+        println("4- Exit")
         print("here: ")
     }
 

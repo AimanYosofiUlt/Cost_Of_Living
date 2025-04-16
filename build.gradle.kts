@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.4"))
+    implementation("io.insert-koin:koin-core")
 }
 
 tasks.test {

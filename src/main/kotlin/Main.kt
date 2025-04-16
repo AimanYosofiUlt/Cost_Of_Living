@@ -1,29 +1,16 @@
 package com.moscow.squad
 
-import com.moscow.squad.data.CsvCitiesRepository
-import com.moscow.squad.data.CsvFileReader
-import com.moscow.squad.data.CitiesCsvParsers
-import com.moscow.squad.logic.CitiesRepository
-import com.moscow.squad.logic.GetCitiesHasCheapestGroceryUseCase
-import com.moscow.squad.logic.GetCitiesNamesWithTopSalaryUseCase
-import com.moscow.squad.logic.SearchSalariesInCountryUseCase
+import com.moscow.squad.dependencyInjection.appModule
+import com.moscow.squad.dependencyInjection.useCasesModule
 import com.moscow.squad.presentation.CostOfLivingUI
-import java.io.File
+import org.koin.core.context.startKoin
+import org.koin.mp.KoinPlatform
 
 fun main() {
-    val fileName = "costOfLiving.csv"
-    val csvFile = File(fileName)
-    val csvFileReader = CsvFileReader(csvFile)
-    val citiesCsvParsers = CitiesCsvParsers()
-    val citiesRepository: CitiesRepository = CsvCitiesRepository(csvFileReader, citiesCsvParsers)
-    val getCitiesNamesWithTopSalaryFeature = GetCitiesNamesWithTopSalaryUseCase(citiesRepository)
-    val getCitiesHasCheapestGroceryUseCase = GetCitiesHasCheapestGroceryUseCase(citiesRepository)
-    val searchSalariesInCountryUseCase = SearchSalariesInCountryUseCase(citiesRepository)
+    startKoin {
+        modules(appModule, useCasesModule)
+    }
 
-    val costOfLivingUI = CostOfLivingUI(
-        getCitiesNamesWithTopSalaryFeature,
-        getCitiesHasCheapestGroceryUseCase,
-        searchSalariesInCountryUseCase,
-    )
+    val costOfLivingUI: CostOfLivingUI = KoinPlatform.getKoin().get()
     costOfLivingUI.start()
 }

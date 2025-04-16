@@ -1,7 +1,5 @@
 package com.moscow.squad.model
 
-import javax.print.attribute.standard.PrintQuality
-
 data class City(
     val cityName: String,
     val countryName: String,
